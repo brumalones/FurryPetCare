@@ -1,14 +1,14 @@
 package br.com.furrypetcare.controller;
 
 
-import br.com.furrypetcare.domain.auth.email.dto.VerificationEmail;
-import br.com.furrypetcare.domain.auth.login.LoginEntity;
-import br.com.furrypetcare.domain.auth.login.LoginService;
-import br.com.furrypetcare.domain.auth.login.dao.DetailSignUp;
-import br.com.furrypetcare.domain.auth.login.dao.SignIn;
-import br.com.furrypetcare.domain.auth.login.dto.SignUp;
-import br.com.furrypetcare.domain.auth.security.DataTokenJWT;
-import br.com.furrypetcare.domain.auth.security.TokenService;
+import br.com.furrypetcare.domain.email.dto.VerificationEmail;
+import br.com.furrypetcare.domain.login.LoginEntity;
+import br.com.furrypetcare.domain.login.LoginService;
+import br.com.furrypetcare.domain.login.dao.DetailSignUp;
+import br.com.furrypetcare.domain.login.dao.SignIn;
+import br.com.furrypetcare.domain.login.dto.SignUp;
+import br.com.furrypetcare.security.DataTokenJWT;
+import br.com.furrypetcare.security.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
