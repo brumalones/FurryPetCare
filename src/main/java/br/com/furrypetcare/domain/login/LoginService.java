@@ -5,6 +5,7 @@ import br.com.furrypetcare.domain.email.dto.VerificationEmail;
 import br.com.furrypetcare.domain.login.dao.SignIn;
 import br.com.furrypetcare.domain.login.dto.SignUp;
 import br.com.furrypetcare.controller.exception.ValidatorException;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,19 +26,19 @@ public class LoginService implements UserDetailsService {
         return repository.findByUsername(username);
     }
 
-    public LoginEntity signUpMerchant(SignUp singUp) {
+    public LoginEntity signUpMerchant(SignUp singUp) throws MessagingException {
         return sigUp(singUp, RoleAuthorities.ROLE_MERCHANT);
     }
 
-    public LoginEntity signUpClient(SignUp singUp) {
+    public LoginEntity signUpClient(SignUp singUp) throws MessagingException {
         return sigUp(singUp, RoleAuthorities.ROLE_CLIENT);
     }
 
-    private LoginEntity sigUp(SignUp singUp, RoleAuthorities roleAuthorities) {
+    private LoginEntity sigUp(SignUp singUp, RoleAuthorities roleAuthorities) throws MessagingException {
         if (!repository.existsByUsername(singUp.username())) {
             if (!repository.existsByEmail(singUp.email())) {
                 var loginEntity = new LoginEntity(singUp, roleAuthorities);
-                emailVerificationService.sendVerificationEmail(loginEntity.getEmail(), loginEntity.getVerificationToken());
+                emailVerificationService.sendVerificationEmail(loginEntity.getEmail(), loginEntity.getUsername(), loginEntity.getVerificationToken());
                 return repository.save(loginEntity);
             }
             throw new ValidatorException("Email " + singUp.email() + " already exists");
@@ -54,10 +55,10 @@ public class LoginService implements UserDetailsService {
         throw new ValidatorException("Token has expired!");
     }
 
-    public LoginEntity resendVerificationToken(String email) {
+    public LoginEntity resendVerificationToken(String email) throws MessagingException {
         var loginEntity = repository.findByEmail(email);
         loginEntity.definitionToken();
-        emailVerificationService.sendVerificationEmail(loginEntity.getEmail(), loginEntity.getVerificationToken());
+        emailVerificationService.sendVerificationEmail(loginEntity.getEmail(), loginEntity.getUsername(), loginEntity.getVerificationToken());
         return repository.save(loginEntity);
     }
 

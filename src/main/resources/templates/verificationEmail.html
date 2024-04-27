@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Verificação de E-mail</title>
+    <style>
+        .container {
+            border: 1px solid #e3e4e6;
+            border-radius: 8px;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            padding: 3rem;
+            /*background-color: #2D3331;
+            color: white;*/
+        }
+        img {
+            width: 200px;
+            height: 200px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            outline: none;
+            border-radius: 100%;
+            text-decoration: none;
+        }
+        .access-code-box {
+            font-size: 24px;
+            margin-bottom: 0px;
+            border: 1px solid white; /* Bordas brancas */
+            padding: 10px; /* Espaçamento interno */
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center /* Para que a borda envolva o conteúdo */
+        }
+        .code {
+            font-size: 42px;
+            margin-top: 0px;
+            margin-bottom: 2rem;
+        }
+        .message {
+            font-size: 16px;
+        }
+        .signature {
+            margin-bottom: 0px;
+            font-size: 16px;
+        }
+        .footer-text {
+            font-size: 12px;
+            margin-bottom: 0px;
+            margin-top: .25rem;
+        }
+        .footer-text a {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <tbody>
+    <tr>
+        <td>
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <div class="container" style= "background-color: #2D3331; color: white;">
+
+                            <img src="https://live.staticflickr.com/65535/53681094902_cd440ebae3_q_d.jpg"
+                                 alt="Furry Pet Care Logo">
+
+                            <div class="access-code-box">
+                                <p class="access-code-box">
+                                    <strong>Seu código de acesso é:</strong>
+                                </p>
+                                <p class="code">
+                                    <strong th:text="${token}">123-456</strong>
+                                </p>
+                            </div>
+
+                            <div class="message">
+                                <p th:text="'Olá, ' + ${user}">Olá, Usuario,</p>
+                                <p>Por favor, retorne à página de login e insira o código acima para
+                                    confirmar sua identidade.</p>
+                            </div>
+
+                            <div class="signature">
+                                <p>Abraços,</p>
+                                <p>Furry Pet Care</p>
+                            </div>
+
+                            <hr>
+                            <div class="footer-text">
+                                <p>Esse email é enviado automaticamente e não recebe respostas.</p>
+                                <p>Precisa de ajuda?
+                                    <a href="https://copilot.microsoft.com/"
+                                       alt="Fale conosco"
+                                       target="_blank">Fale Conosco
+                                    </a>
+                                </p>
+                                <p>
+                                    © Furry Pet Care
+                                    - Av. Dr. Aprendizado Junior 1800
+                                    - Escola GPT
+                                    - Osasco
+                                    - SP
+                                    - CEP: 06000-000
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -11,6 +11,7 @@ import br.com.furrypetcare.security.DataTokenJWT;
 import br.com.furrypetcare.security.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class SecurityController {
 
     @PostMapping("/merchant/sing-up")
     @Transactional
-    public ResponseEntity<DetailSignUp> singUpMerchant(@RequestBody @Valid SignUp singUp, UriComponentsBuilder componentsBuilder) {
+    public ResponseEntity<DetailSignUp> singUpMerchant(@RequestBody @Valid SignUp singUp, UriComponentsBuilder componentsBuilder) throws MessagingException {
         var loginEntity = loginService.signUpMerchant(singUp);
         var uri = componentsBuilder.path("service/{id}").buildAndExpand(loginEntity.getId()).toUri();
         return ResponseEntity.created(uri).body(new DetailSignUp(loginEntity));
@@ -45,7 +46,7 @@ public class SecurityController {
 
     @PostMapping("/client/sing-up")
     @Transactional
-    public ResponseEntity<DetailSignUp> singUpClient(@RequestBody @Valid SignUp singUp, UriComponentsBuilder componentsBuilder) {
+    public ResponseEntity<DetailSignUp> singUpClient(@RequestBody @Valid SignUp singUp, UriComponentsBuilder componentsBuilder) throws MessagingException {
         var loginEntity = loginService.signUpClient(singUp);
         var uri = componentsBuilder.path("security/login/{id}").buildAndExpand(loginEntity.getId()).toUri();
         return ResponseEntity.created(uri).body(new DetailSignUp(loginEntity));
@@ -60,7 +61,7 @@ public class SecurityController {
 
     @PostMapping("/resend-verification-email")
     @Transactional
-    public ResponseEntity<DetailSignUp> resendVerification(@RequestParam @Valid String email) {
+    public ResponseEntity<DetailSignUp> resendVerification(@RequestParam @Valid String email) throws MessagingException {
         LoginEntity login = loginService.resendVerificationToken(email);
         return ResponseEntity.accepted().body(new DetailSignUp(login));
     }
